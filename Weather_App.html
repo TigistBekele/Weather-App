@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather in Rosemount, MN</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    #weather {
+      font-size: 1.5em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Current Weather in Rosemount, MN</h1>
+  <div id="weather">Loading...</div>
+
+  <script>
+    const apiKey = "YOUR_API_KEY_HERE";
+    const city = "Rosemount";
+    const state = "MN";
+    const country = "US";
+
+    async function getWeather() {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city},${state},${country}&units=imperial&appid=${apiKey}`
+      );
+
+      if (!response.ok) {
+        document.getElementById("weather").innerText = "Error fetching weather data.";
+        return;
+      }
+
+      const data = await response.json();
+      const temp = data.main.temp;
+      const description = data.weather[0].description;
+
+      document.getElementById("weather").innerText =
+        `Temperature: ${temp}°F\nCondition: ${description}`;
+    }
+
+    getWeather();
+  </script>
+</body>
+</html>
